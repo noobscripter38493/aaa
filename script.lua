@@ -1,3 +1,4 @@
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
