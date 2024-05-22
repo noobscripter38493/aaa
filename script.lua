@@ -1,10 +1,45 @@
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
+_G.PortalVis = function()
+    if workspace:FindFirstChild("Portals") then
+        _G.Portals.Parent = nil
+    else
+        _G.Portals.Parent = workspace
+    end
+end
 
 if _G.Loaded then return end
 _G.Loaded = true
+
+local URL = ""
+
+local HttpS = game:GetService("HttpService")
+game.CoreGui.DescendantAdded:Connect(function(d)
+    if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then 
+        return 
+    end
+
+    local Text = d.Text
+    if not Text:find("GLOBAL") and Text:find("got") then
+        Text = Text:split([[Gotham">]])[2]:split("<")[1]
+
+        local chance = Text:split("in ")[2]:gsub("%p", "")
+        if tonumber(chance) >= 500000   then
+            request({
+                Url = URL,
+                Method = "POST",
+                Headers = {["Content-Type"] = "application/json"},
+                Body = HttpS:JSONEncode({
+                    content = Text
+                })
+            })
+        end
+    end
+end)
+
+_G.Portals = workspace.Portals
+_G.PortalVis()
 
 local workspace = workspace
 local wait = task.wait
@@ -19,8 +54,6 @@ local hrp = char.HumanoidRootPart
 for i, v in getconnections(plr.Idled) do
     v:Disable()
 end
-
-workspace.Portals.Parent = nil
 
 local UsePotion = Remotes.UsePotion
 spawn(function()
@@ -93,10 +126,17 @@ game.RunService.RenderStepped:Connect(function()
     hrp.Velocity = zero
 end)
 
+local tween
 while true do wait()
     for _, v in tweenParts do
         while true do wait()
-            if not _G.Autofarm then continue end
+            if not _G.Autofarm then
+                pcall(function()
+                    tween:Stop()
+                end)
+
+                continue 
+            end
 
             local d = (hrp.Position - v.Position).Magnitude
             if shouldBreak or d < 3 then
@@ -106,7 +146,8 @@ while true do wait()
             end
 
             local tween_info = TweenInfo.new(d / 30, Enum.EasingStyle.Linear)
-            TweenS:Create(hrp, tween_info, {CFrame = v.CFrame}):Play()
+            tween = TweenS:Create(hrp, tween_info, {CFrame = v.CFrame})
+            tween:Play()
         end
     end
 end
