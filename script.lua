@@ -8,8 +8,11 @@ _G.Portals = _G.Portals or workspace.Portals
 _G.PortalVis = function(bool)
     _G.Portals.Parent = bool and workspace or nil
 end
-
+_G.RblxToDisc = {
+    ["ROBLOXUSER"] = "DISCORDID",
+}
 _G.PortalVis(false)
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()
 ]]
 
@@ -27,9 +30,11 @@ game.CoreGui.DescendantAdded:Connect(function(d)
     local Text = d.Text
     if Text:find("got") then
         local InServer
+        local discordId
         for _, p in Players:GetPlayers() do
             if Text:find(p.Name) then
                 InServer = true
+                discordId = _G.RblxToDisc[p.Name]
                 break
             end
         end
@@ -40,6 +45,10 @@ game.CoreGui.DescendantAdded:Connect(function(d)
 
         local chance = Text:split("in ")[2]:gsub("%p", "")
         if tonumber(chance) >= 500000 then
+            if discordId then
+                Text = `<@{discordId}> {Text}`
+            end
+
             request({
                 Url = _G.webhookUrl,
                 Method = "POST",
