@@ -1,12 +1,8 @@
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
-_G.PortalVis = function()
-    if workspace:FindFirstChild("Portals") then
-        _G.Portals.Parent = nil
-    else
-        _G.Portals.Parent = workspace
-    end
+_G.PortalVis = function(bool)
+    _G.Portals.Parent = bool and workspace or nil
 end
 
 if _G.Loaded then return end
