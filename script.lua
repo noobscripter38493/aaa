@@ -66,6 +66,17 @@ for _, v in getconnections(plr.Idled) do
     v:Disable()
 end
 
+local arena = Remotes.Arena
+local refresh = Remotes.Refresh
+spawn(function()
+    while true do wait(1)
+        if _G.Arena then
+            arena:FireServer(1)
+            refresh:InvokeServer()
+        end
+    end
+end)
+
 local UsePotion = Remotes.UsePotion
 spawn(function()
     while true do wait()
