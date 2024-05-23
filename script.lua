@@ -1,3 +1,4 @@
+_G.webhookUrl = ""
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
@@ -8,22 +9,35 @@ end
 if _G.Loaded then return end
 _G.Loaded = true
 
-local URL = ""
+_G.Portals = workspace.Portals
+_G.PortalVis(false)
 
 local HttpS = game:GetService("HttpService")
+local Players = game:GetService("Players")
+
 game.CoreGui.DescendantAdded:Connect(function(d)
     if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then 
         return 
     end
 
     local Text = d.Text
-    if not Text:find("GLOBAL") and Text:find("got") then
+    if Text:find("got") then
+        local InServer
+        for _, p in Players:GetPlayers() do
+            if Text:find(p.Name) then
+                InServer = true
+                break
+            end
+        end
+
+        if not InServer then return end
+
         Text = Text:split([[Gotham">]])[2]:split("<")[1]
 
         local chance = Text:split("in ")[2]:gsub("%p", "")
-        if tonumber(chance) >= 500000   then
+        if tonumber(chance) >= 500000 then
             request({
-                Url = URL,
+                Url = _G.webhookUrl,
                 Method = "POST",
                 Headers = {["Content-Type"] = "application/json"},
                 Body = HttpS:JSONEncode({
@@ -34,20 +48,17 @@ game.CoreGui.DescendantAdded:Connect(function(d)
     end
 end)
 
-_G.Portals = workspace.Portals
-_G.PortalVis()
-
 local workspace = workspace
 local wait = task.wait
 local spawn = task.spawn
 local TweenS = game:GetService("TweenService")
 local Remotes = game:GetService("ReplicatedStorage").Remotes
 local RunS = game:GetService("RunService")
-local plr = game.Players.LocalPlayer
+local plr = Players.LocalPlayer
 local char = plr.Character
 local hrp = char.HumanoidRootPart
 
-for i, v in getconnections(plr.Idled) do
+for _, v in getconnections(plr.Idled) do
     v:Disable()
 end
 
@@ -127,10 +138,7 @@ while true do wait()
     for _, v in tweenParts do
         while true do wait()
             if not _G.Autofarm then
-                pcall(function()
-                    tween:Stop()
-                end)
-
+                tween:Stop()
                 continue 
             end
 
