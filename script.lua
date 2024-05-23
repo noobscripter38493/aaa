@@ -1,17 +1,20 @@
+--[[
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
+_G.Arena = false
 _G.webhookUrl = "https://discord.com/api/webhooks/1242896565987835964/HhSEttEPjmdHWmw_eka9Tu0d_SrWIy3o5YRTA25aGnt4guJ8HFkMcpF_H8FHp1VrXu0H"
-
-if _G.Loaded then return end
-_G.Loaded = true
-
-local Portals = workspace.Portals
+_G.Portals = _G.Portals or workspace.Portals
 _G.PortalVis = function(bool)
-    Portals.Parent = bool and workspace or nil
+    _G.Portals.Parent = bool and workspace or nil
 end
 
 _G.PortalVis(false)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()
+]]
+
+if _G.Loaded then return end
+_G.Loaded = true
 
 local HttpS = game:GetService("HttpService")
 local Players = game:GetService("Players")
