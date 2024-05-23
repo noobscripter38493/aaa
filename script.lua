@@ -26,7 +26,7 @@ game.CoreGui.DescendantAdded:Connect(function(d)
         Text = Text:split([[Gotham">]])[2]:split("<")[1]
 
         local chance = Text:split("in ")[2]:gsub("%p", "")
-        if tonumber(chance) >= 500000 then
+        if tonumber(chance) >= 1 then
             if discordId then
                 Text = `<@{discordId}> {Text}`
             end
