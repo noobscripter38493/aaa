@@ -1,21 +1,3 @@
---[[
-_G.Autofarm = true
-_G.Roll = true
-_G.UsePotions = true
-_G.Arena = false
-_G.webhookUrl = ""
-_G.Portals = _G.Portals or workspace.Portals
-_G.PortalVis = function(bool)
-    _G.Portals.Parent = bool and workspace or nil
-end
-_G.RblxToDisc = {
-    ["ROBLOXUSER"] = "DISCORDID",
-}
-_G.PortalVis(false)
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()
-]]
-
 if _G.Loaded then return end
 _G.Loaded = true
 
