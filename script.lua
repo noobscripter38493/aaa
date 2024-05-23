@@ -1,15 +1,16 @@
-_G.webhookUrl = ""
 _G.Autofarm = true
 _G.Roll = true
 _G.UsePotions = true
-_G.PortalVis = function(bool)
-    _G.Portals.Parent = bool and workspace or nil
-end
+_G.webhookUrl = "https://discord.com/api/webhooks/1242896565987835964/HhSEttEPjmdHWmw_eka9Tu0d_SrWIy3o5YRTA25aGnt4guJ8HFkMcpF_H8FHp1VrXu0H"
 
 if _G.Loaded then return end
 _G.Loaded = true
 
-_G.Portals = workspace.Portals
+local Portals = workspace.Portals
+_G.PortalVis = function(bool)
+    Portals.Parent = bool and workspace or nil
+end
+
 _G.PortalVis(false)
 
 local HttpS = game:GetService("HttpService")
@@ -130,7 +131,9 @@ end)
 
 local zero = Vector3.zero
 game.RunService.RenderStepped:Connect(function()
-    hrp.Velocity = zero
+    if _G.Autofarm then
+        hrp.Velocity = zero
+    end
 end)
 
 local tween
