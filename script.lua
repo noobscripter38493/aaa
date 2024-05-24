@@ -59,11 +59,22 @@ end
 
 local arena = Remotes.Arena
 local refresh = Remotes.Refresh
+local done = false
+local old; old = hookfunc(print, function(...)
+    local args = {...}
+    if args[1] == "YOU WON" or args[2] == "L BUDDY" then
+        done = true
+    end
+end)
+
 spawn(function()
     while true do wait(1)
         if _G.Arena then
-            arena:FireServer(1)
             refresh:InvokeServer()
+            arena:FireServer(1)
+
+            repeat wait() until done
+            done = false
         end
     end
 end)
@@ -136,9 +147,7 @@ end)
 
 local zero = Vector3.zero
 game.RunService.RenderStepped:Connect(function()
-    if _G.Autofarm then
-        hrp.Velocity = zero
-    end
+    hrp.Velocity = zero
 end)
 
 local tween
@@ -146,11 +155,8 @@ while true do wait()
     for _, v in tweenParts do
         while true do wait()
             if not _G.Autofarm then
-                pcall(function()
-                    tween:Stop()
-                end)
-
-                continue
+                tween:Stop()
+                continue 
             end
 
             local d = (hrp.Position - v.Position).Magnitude
