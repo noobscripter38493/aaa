@@ -59,25 +59,15 @@ end
 
 local arena = Remotes.Arena
 local refresh = Remotes.Refresh
-local done = false
-local old; old = hookfunc(print, function(...)
-    local args = {...}
-    if args[1] == "YOU WON" or args[2] == "L BUDDY" then
-        done = true
-    end
-
-    return old(...)
-end)
 
 spawn(function()
-    while true do wait(1)
+    while true do
         if _G.Arena then
             refresh:InvokeServer()
             arena:FireServer(1)
-
-            repeat wait() until done
-            done = false
         end
+
+        wait(75)
     end
 end)
 
