@@ -68,7 +68,7 @@ spawn(function()
             arena:FireServer(1)
         end
 
-        wait(75)
+        wait(50)
     end
 end)
 
