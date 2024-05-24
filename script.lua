@@ -65,6 +65,8 @@ local old; old = hookfunc(print, function(...)
     if args[1] == "YOU WON" or args[2] == "L BUDDY" then
         done = true
     end
+
+    return old(...)
 end)
 
 spawn(function()
