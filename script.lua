@@ -148,7 +148,10 @@ while true do wait()
     for _, v in tweenParts do
         while true do wait()
             if not _G.Autofarm then
-                tween:Stop()
+                pcall(function()
+                    tween:Stop()
+                end)
+                
                 continue 
             end
 
