@@ -148,8 +148,9 @@ while true do wait()
             if not _G.Autofarm then
                 pcall(function()
                     tween:Stop()
-                    continue
                 end)
+
+                continue
             end
 
             local d = (hrp.Position - v.Position).Magnitude
