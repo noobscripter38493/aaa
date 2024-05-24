@@ -64,6 +64,7 @@ spawn(function()
     while true do
         if _G.Arena then
             refresh:InvokeServer()
+            wait(1)
             arena:FireServer(1)
         end
 
