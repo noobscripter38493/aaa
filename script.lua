@@ -146,8 +146,10 @@ while true do wait()
     for _, v in tweenParts do
         while true do wait()
             if not _G.Autofarm then
-                tween:Stop()
-                continue 
+                pcall(function()
+                    tween:Stop()
+                    continue
+                end)
             end
 
             local d = (hrp.Position - v.Position).Magnitude
