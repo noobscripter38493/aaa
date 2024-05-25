@@ -39,10 +39,14 @@ game.CoreGui.DescendantAdded:Connect(function(d)
     if Text:find("got") then
         local InServer
         local discordId
+        local minchance
         for _, p in Players:GetPlayers() do
             if Text:find(p.Name) then
                 InServer = true
-                discordId = _G.RblxTo[p.Name].Discord
+                
+                local Data = _G.RblxTo[p.Name]
+                discordId = Data.Discord
+                minChance = Data.MinChance
                 break
             end
         end
@@ -52,7 +56,7 @@ game.CoreGui.DescendantAdded:Connect(function(d)
         Text = Text:split([[Gotham">]])[2]:split("<")[1]
 
         local chance = Text:split("in ")[2]:gsub("%p", "")
-        if tonumber(chance) >= _G.RblxTo[p.Name].MinChance then
+        if tonumber(chance) >= minChance then
             request({
                 Url = _G.webhookUrl,
                 Method = "POST",
