@@ -1,8 +1,33 @@
 if _G.Loaded then return end
 _G.Loaded = true
 
+local workspace = workspace
+local wait = task.wait
+local spawn = task.spawn
+local TweenS = game:GetService("TweenService")
 local HttpS = game:GetService("HttpService")
 local Players = game:GetService("Players")
+local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+local RunS = game:GetService("RunService")
+local plr = Players.LocalPlayer
+local char = plr.Character
+local hrp = char.HumanoidRootPart
+
+_G.Settings = _G.Settings or Https:JSONDecode(readfile("Settings.json"))
+spawn(function()
+    while true do
+        writefile("Settings.json", HttpS:JSONEncode(_G.Settings))
+        wait(5)
+    end
+end)
+
+local Portals = workspace:WaitForChild("Portals")
+_G.PortalVis = _G.PortalVis or function(bool)
+    Portals.Parent = bool and workspace or nil
+end
+_G.PortalVis(false)
+
+queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()')
 
 game.CoreGui.DescendantAdded:Connect(function(d)
     if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then 
@@ -43,16 +68,6 @@ game.CoreGui.DescendantAdded:Connect(function(d)
     end
 end)
 
-local workspace = workspace
-local wait = task.wait
-local spawn = task.spawn
-local TweenS = game:GetService("TweenService")
-local Remotes = game:GetService("ReplicatedStorage").Remotes
-local RunS = game:GetService("RunService")
-local plr = Players.LocalPlayer
-local char = plr.Character
-local hrp = char.HumanoidRootPart
-
 for _, v in getconnections(plr.Idled) do
     v:Disable()
 end
@@ -68,7 +83,7 @@ spawn(function()
             arena:FireServer(1)
         end
 
-        wait(50)
+        wait(75)
     end
 end)
 
