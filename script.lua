@@ -39,11 +39,11 @@ game.CoreGui.DescendantAdded:Connect(function(d)
     if Text:find("got") then
         local InServer
         local discordId
-        local minchance
+        local minChance
         for _, p in Players:GetPlayers() do
             if Text:find(p.Name) then
                 InServer = true
-                
+
                 local Data = _G.RblxTo[p.Name]
                 discordId = Data.Discord
                 minChance = Data.MinChance
