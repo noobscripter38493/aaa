@@ -21,17 +21,16 @@ spawn(function()
     end
 end)
 
-local Portals = _G.Portals or workspace:WaitForChild("Portals")
+local Portals = workspace:WaitForChild("Portals")
 _G.PortalVis = _G.PortalVis or function(bool)
     Portals.Parent = bool and workspace or nil
 end
 _G.PortalVis(false)
-setrawmetatable(_G, {__index = _G.Settings})
 
 queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()')
 
 game.CoreGui.DescendantAdded:Connect(function(d)
-    if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then 
+    if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then
         return 
     end
 
@@ -42,7 +41,7 @@ game.CoreGui.DescendantAdded:Connect(function(d)
         for _, p in Players:GetPlayers() do
             if Text:find(p.Name) then
                 InServer = true
-                discordId = _G.RblxToDisc[p.Name]
+                discordId = _G.RblxTo[p.Name].Discord
                 break
             end
         end
@@ -52,17 +51,13 @@ game.CoreGui.DescendantAdded:Connect(function(d)
         Text = Text:split([[Gotham">]])[2]:split("<")[1]
 
         local chance = Text:split("in ")[2]:gsub("%p", "")
-        if tonumber(chance) >= 500000 then
-            if discordId then
-                Text = `<@{discordId}> {Text}`
-            end
-
+        if tonumber(chance) >= _G.RblxTo[p.Name].MinChance then
             request({
                 Url = _G.webhookUrl,
                 Method = "POST",
                 Headers = {["Content-Type"] = "application/json"},
                 Body = HttpS:JSONEncode({
-                    content = Text
+                    content = `<@{discordId}> {Text}`
                 })
             })
         end
@@ -84,7 +79,7 @@ spawn(function()
             arena:FireServer(1)
         end
 
-        wait(75)
+        wait(50)
     end
 end)
 
