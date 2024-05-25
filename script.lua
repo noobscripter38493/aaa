@@ -21,7 +21,7 @@ spawn(function()
     end
 end)
 
-local Portals = workspace:WaitForChild("Portals")
+local Portals = _G.Portals or workspace:WaitForChild("Portals")
 _G.PortalVis = _G.PortalVis or function(bool)
     Portals.Parent = bool and workspace or nil
 end
