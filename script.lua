@@ -26,7 +26,7 @@ _G.PortalVis = _G.PortalVis or function(bool)
     Portals.Parent = bool and workspace or nil
 end
 _G.PortalVis(false)
-setrawmetatable(_G, __index = _G.Settings}
+setrawmetatable(_G, {__index = _G.Settings})
 
 queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()')
 
