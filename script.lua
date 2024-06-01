@@ -101,8 +101,10 @@ end)
 local roll = Remotes.Roll
 spawn(function()
     while true do wait()
-        if _G.Roll then 
-            roll:InvokeServer()
+        if _G.Roll then
+            spawn(function()
+                roll:InvokeServer()
+            end)
         end
     end
 end)
