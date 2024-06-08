@@ -13,23 +13,6 @@ local plr = Players.LocalPlayer
 local char = plr.Character
 local hrp = char.HumanoidRootPart
 
-_G.Settings = _G.Settings or Https:JSONDecode(readfile("Settings.json"))
-spawn(function()
-    while true do
-        writefile("Settings.json", HttpS:JSONEncode(_G.Settings))
-        wait(5)
-    end
-end)
-
-local Portals = _G.Portals or workspace:WaitForChild("Portals")
-_G.PortalVis = _G.PortalVis or function(bool)
-    Portals.Parent = bool and workspace or nil
-end
-_G.PortalVis(false)
-setrawmetatable(_G, {__index = _G.Settings})
-
-queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/noobscripter38493/aaa/main/script.lua"))()')
-
 game.CoreGui.DescendantAdded:Connect(function(d)
     if not d:IsA("TextLabel") or not d:FindFirstAncestor("RCTScrollContentView") then
         return 
